@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useEffect, useState } from 'react';
+import './index.css';
+import Form from './Form';
+import List from './List';
+import Table from './Table';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [resourceType,setResourceType] = useState('users');
+  const [items,setItems] = useState([]);
 
+  useEffect( () => {
+    fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
+    .then(response => response.json())
+    .then(json => setItems(json))
+    
+  
+  },[resourceType])
+  
+  return (
+  <>
+  
+      
+<Form resourceType={resourceType} setResourceType={setResourceType}/>
+<h1>{resourceType}</h1>
+ {/*    <List items={items}/>
+     */}
+     <Table items={items}/>
+  </>
+      
+  )
+
+  }
 export default App;
